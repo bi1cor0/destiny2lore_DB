@@ -1,7 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 dotenv.config();
-//import grades from './routes/grades.mjs'; line to import from routes folder
+import guardians from './routes/guardians.mjs'; 
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 //import './db/conn.mjs'
-app.use('/grades', grades);
+app.use('/guardians', guardians);
 
 
 app.get('/', (req, res) =>{

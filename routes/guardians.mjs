@@ -10,11 +10,6 @@ router.post('/', async (req, res) => {
         let collection = await db.collection("destiny_oc_guardians")
         let newDocument = req.body;
 
-        if(newDocument.student_id){ //backwards compatibility if statement if the student_id still exists
-            newDocument.learner_id = newDocument.student_id;
-            delete newDocument.student_id;
-        }
-
         let result = await collection.insertOne(newDocument)
         res.status(201).json(result)
 
