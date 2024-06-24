@@ -4,10 +4,20 @@ import { ObjectId } from 'mongodb' //importing the object 'ObjectId' from the mo
 
 const router = express.Router() //setting up router var to be exported to main index.mjs file
 
+router.get('/', async (req, res) => {
+
+    try{
+        let collection = await db.collection("destiny_exotics")
+        res.json(collection)
+    } catch(err) {
+        res.status(404).json({error: "Not found"})
+    }
+})
+
 //create a post route for guardians page to submit new guardian ocs.
 router.post('/', async (req, res) => {
     try{
-        let collection = await db.collection("destiny_oc_guardians")
+        let collection = await db.collection("destiny_exotics")
         let newDocument = req.body;
 
         let result = await collection.insertOne(newDocument)
@@ -19,10 +29,10 @@ router.post('/', async (req, res) => {
 })
 
 
-//create id for guardians route by ID 
+//create id for exotic weapons route by ID 
 router.get('/:id', async (req, res) => {
     try{//setting up try catch for when the data cannot be read.
-        let collection = await db.collection("destiny_oc_guardians") //get data from mongo db collection
+        let collection = await db.collection("destiny_exotics") //get data from mongo db collection
         let query = {_id: new ObjectId(req.params.id)} //get id from the params
         let result = await collection.findOne(query) //output data into array form
 
@@ -42,7 +52,7 @@ router.patch('/:id', async (req, res) => {
     try{
         if(ObjectId.isValid(req.params.id)){
             const updates = req.body;
-            let collection = await db.collection("destiny_oc_guardians")
+            let collection = await db.collection("destiny_exotics")
             let results = await collection.updateOne({_id: new ObjectId(req.params.id)}, {$set: updates})
             console.log(results)
             if(!results){ //check to see if result is not true. this will prove the number entered is out of scope.
@@ -64,7 +74,7 @@ router.patch('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try{
         if(ObjectId.isValid(req.params.id)){
-            await db.collection("destiny_oc_guardians")
+            await db.collection("destiny_exotics")
             .deleteOne({_id: new ObjectId(req.params.id)})
             .then(result => {
                 res.status(200).json(result)
