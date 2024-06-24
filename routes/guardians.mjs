@@ -38,6 +38,7 @@ router.get('/:id', async (req, res) => {
 })
 
 
+
 function checkErr(message, status) { //helper function to check to see if any data is taken.
     const error = new Error(message)
     error.status = status;

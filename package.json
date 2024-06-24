@@ -1,7 +1,6 @@
 {
   "name": "destiny2lore_4realdb",
   "version": "1.0.0",
-  "description": "",
   "main": "index.mjs",
   "type": "module",
   "scripts": {
@@ -16,5 +15,6 @@
     "express": "^4.19.2",
     "mongodb": "^6.7.0",
     "mongoose": "^8.4.3"
-  }
+  },
+  "description": ""
 }

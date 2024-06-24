@@ -14,6 +14,6 @@ try{
     console.error(err);
 }
 
-let db = conn.db("sample_training")
+let db = conn.db("destiny2_lore")
 
 export default db;
