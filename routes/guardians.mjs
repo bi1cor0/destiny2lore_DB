@@ -43,8 +43,26 @@ router.patch('/:id', async (req, res) => {
         const updates = req.body;
 
         if(ObjectId.isValid(req.params.id)){
-            db.collection("destiny_oc_guardians")
+            await db.collection("destiny_oc_guardians")
             .updateOne({_id: ObjectId(req.params.id)}, {$set: updates})
+            .then(result => {
+                res.status(200).json(result)
+            })
+        } else {
+            res.status(500).json({error: 'Not a valid ID'})
+        }
+
+
+    } catch(err) {
+        res.status(500).send(err)
+    }
+})
+
+router.delete('/:id', async (req, res) => {
+    try{
+        if(ObjectId.isValid(req.params.id)){
+            await db.collection("destiny_oc_guardians")
+            .deleteOne({_id: ObjectId(req.params.id)})
             .then(result => {
                 res.status(200).json(result)
             })
