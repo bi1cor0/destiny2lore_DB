@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 dotenv.config();
 import guardians from './routes/guardians.mjs'; 
 import exotics from './routes/exotics.mjs'; 
+import npcs from './routes/npcs.mjs'; 
 
 
 const PORT = process.env.PORT || 3000;
@@ -28,11 +29,12 @@ app.use((req, res, next) => { //setting up logging middleware to log all CRUD re
 
 app.use('/guardians', guardians);
 app.use('/exotics', exotics);
+app.use('/npcs', npcs);
 
 
 
 app.get('/', (req, res) =>{
-    res.send(`<h1 style='color:blue'>Welcome to the API in here</h1>`);
+    res.send(`<h1 style='color:blue'>Welcome to the Destiny 2 OC editor with live database!</h1>`);
 });
 
 app.use((err, req, res, next) => {
