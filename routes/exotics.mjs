@@ -8,20 +8,33 @@ router.get('/', async (req, res) => {
 
     try{
         let collection = await db.collection("destiny_exotics")
-        res.json(collection)
-    } catch(err) {
+        let results = await collection.find({})
+        .limit(50)
+        .toArray();
+      res.send(results).status(200);
+        } catch(err) {
         res.status(404).json({error: "Not found"})
     }
 })
 
-//create a post route for guardians page to submit new guardian ocs.
-router.post('/', async (req, res) => {
+//Update route for the guardians database
+router.patch('/:id', async (req, res) => {
     try{
-        let collection = await db.collection("destiny_exotics")
-        let newDocument = req.body;
+        if(ObjectId.isValid(req.params.id)){
+            const updates = req.body;
+            let collection = await db.collection("destiny_exotics")
+            let results = await collection.updateOne({_id: new ObjectId(req.params.id)}, {$set: updates})
+            console.log(results)
+            if(!results){ //check to see if result is not true. this will prove the number entered is out of scope.
+                throw checkErr("Not Found", 500); //throw error if not found. checkErr is a helper function defined below.
+            } else{
+                res.status(200).json(results) //else return the json result of the var result
+            }
 
-        let result = await collection.insertOne(newDocument)
-        res.status(201).json(result)
+        } else {
+            res.status(500).json({error: 'Not a valid ID'})
+        }
+
 
     } catch(err) {
         res.status(400).send(err)
@@ -44,25 +57,6 @@ router.get('/:id', async (req, res) => {
 
     } catch (err) {
         res.status(404).send(err.message) //send error message if things go wrong.
-    }
-})
-
-
-router.delete('/:id', async (req, res) => {
-    try{
-        if(ObjectId.isValid(req.params.id)){
-            await db.collection("destiny_exotics")
-            .deleteOne({_id: new ObjectId(req.params.id)})
-            .then(result => {
-                res.status(200).json(result)
-            })
-        } else {
-            res.status(500).json({error: 'Not a valid ID'})
-        }
-
-
-    } catch(err) {
-        res.status(500).send(err)
     }
 })
 

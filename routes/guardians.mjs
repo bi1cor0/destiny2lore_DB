@@ -4,6 +4,18 @@ import { ObjectId } from 'mongodb' //importing the object 'ObjectId' from the mo
 
 const router = express.Router() //setting up router var to be exported to main index.mjs file
 
+router.get('/', async (req, res) => {
+
+    try{
+        let collection = await db.collection("destiny_oc_guardians")
+        let results = await collection.find({})
+        .limit(50)
+        .toArray();
+      res.send(results).status(200);    } catch(err) {
+        res.status(404).json({error: "Not found"})
+    }
+})
+
 //create a post route for guardians page to submit new guardian ocs.
 router.post('/', async (req, res) => {
     try{

@@ -8,7 +8,10 @@ router.get('/', async (req, res) => {
 
     try{
         let collection = await db.collection("destiny_npcs")
-        res.json(collection)
+        let results = await collection.find({})
+        .limit(50)
+        .toArray();
+      res.send(results).status(200);
     } catch(err) {
         res.status(404).json({error: "Not found"})
     }
