@@ -47,29 +47,6 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-//Update route for the guardians database
-router.patch('/:id', async (req, res) => {
-    try{
-        if(ObjectId.isValid(req.params.id)){
-            const updates = req.body;
-            let collection = await db.collection("destiny_exotics")
-            let results = await collection.updateOne({_id: new ObjectId(req.params.id)}, {$set: updates})
-            console.log(results)
-            if(!results){ //check to see if result is not true. this will prove the number entered is out of scope.
-                throw checkErr("Not Found", 500); //throw error if not found. checkErr is a helper function defined below.
-            } else{
-                res.status(200).json(results) //else return the json result of the var result
-            }
-
-        } else {
-            res.status(500).json({error: 'Not a valid ID'})
-        }
-
-
-    } catch(err) {
-        res.status(400).send(err)
-    }
-})
 
 router.delete('/:id', async (req, res) => {
     try{

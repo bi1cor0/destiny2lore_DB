@@ -14,22 +14,8 @@ router.get('/', async (req, res) => {
     }
 })
 
-//create a post route for guardians page to submit new guardian ocs.
-router.post('/', async (req, res) => {
-    try{
-        let collection = await db.collection("destiny_npcs")
-        let newDocument = req.body;
 
-        let result = await collection.insertOne(newDocument)
-        res.status(201).json(result)
-
-    } catch(err) {
-        res.status(400).send(err)
-    }
-})
-
-
-//create id for exotic weapons route by ID 
+//create id for npcs route by ID 
 router.get('/:id', async (req, res) => {
     try{//setting up try catch for when the data cannot be read.
         let collection = await db.collection("destiny_npcs") //get data from mongo db collection
@@ -47,7 +33,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-//Update route for the guardians database
+//Update route for the npc database
 router.patch('/:id', async (req, res) => {
     try{
         if(ObjectId.isValid(req.params.id)){
@@ -71,23 +57,6 @@ router.patch('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
-    try{
-        if(ObjectId.isValid(req.params.id)){
-            await db.collection("destiny_npcs")
-            .deleteOne({_id: new ObjectId(req.params.id)})
-            .then(result => {
-                res.status(200).json(result)
-            })
-        } else {
-            res.status(500).json({error: 'Not a valid ID'})
-        }
-
-
-    } catch(err) {
-        res.status(500).send(err)
-    }
-})
 
 
 function checkErr(message, status) { //helper function to check to see if any data is taken.
