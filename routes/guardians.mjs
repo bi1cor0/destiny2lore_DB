@@ -4,7 +4,7 @@ import { ObjectId } from 'mongodb' //importing the object 'ObjectId' from the mo
 
 const router = express.Router() //setting up router var to be exported to main index.mjs file
 
-//create a post route for grades page that's just all grades.
+//create a post route for guardians page to submit new guardian ocs.
 router.post('/', async (req, res) => {
     try{
         let collection = await db.collection("destiny_oc_guardians")
@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
 })
 
 
-//create id for grades route
+//create id for guardians route
 router.get('/:id', async (req, res) => {
     try{//setting up try catch for when the data cannot be read.
         let collection = await db.collection("destiny_oc_guardians") //get data from mongo db collection
@@ -37,6 +37,26 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+//Update route for the guardians database
+router.patch('/:id', async (req, res) => {
+    try{
+        const updates = req.body;
+
+        if(ObjectId.isValid(req.params.id)){
+            db.collection("destiny_oc_guardians")
+            .updateOne({_id: ObjectId(req.params.id)}, {$set: updates})
+            .then(result => {
+                res.status(200).json(result)
+            })
+        } else {
+            res.status(500).json({error: 'Not a valid ID'})
+        }
+
+
+    } catch(err) {
+        res.status(500).send(err)
+    }
+})
 
 
 function checkErr(message, status) { //helper function to check to see if any data is taken.
