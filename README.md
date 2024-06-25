@@ -7,8 +7,8 @@ This project I would admit I did not have that much time for. And when I did I h
 ## Routes explanation to the API
 - destiny_oc_guardians: This is where users will post their Destiny 2 Guardian original characters.
     - CRUD Methods: Post new OCs, Get all entries up to 200 requests, Get by ID, Update by ID, and Delete by ID.
-- destiny_exotics: This is where users can access the exotic weapons portion of the database. They are unable to add any new ones, but are able to update any new information. 
-    - CRUD Methods: Get all entries up to 200 requests, Get by ID, and Update by ID.
-- destiny_npcs: This is where users can access the non-player characters portion of the database. They are unable to add any new ones, but are able to update any new information. 
-    - CRUD Methods: Get all entries up to 200 requests, Get by ID, and Update by ID.
+- destiny_exotics: This is where users can access the exotic weapons portion of the database. 
+    - CRUD Methods: Post new exotic weapons, Get all entries up to 200 requests, Get by ID, Update by ID and Delete by ID..
+- destiny_npcs: This is where users can access the non-player characters portion of the database. 
+    - CRUD Methods: Post new non-player characters, Get all entries up to 200 requests, Get by ID, Update by ID and Delete by ID..
 

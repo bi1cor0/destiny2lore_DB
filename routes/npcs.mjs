@@ -17,6 +17,18 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.post('/', async (req, res) => {
+    try{
+        let collection = await db.collection("destiny_npcs")
+        let newDocument = req.body;
+
+        let result = await collection.insertOne(newDocument)
+        res.status(201).json(result)
+
+    } catch(err) {
+        res.status(400).send(err)
+    }
+})
 
 //create id for npcs route by ID 
 router.get('/:id', async (req, res) => {
@@ -60,6 +72,23 @@ router.patch('/:id', async (req, res) => {
     }
 })
 
+router.delete('/:id', async (req, res) => {
+    try{
+        if(ObjectId.isValid(req.params.id)){
+            await db.collection("destiny_npcs")
+            .deleteOne({_id: new ObjectId(req.params.id)})
+            .then(result => {
+                res.status(200).json(result)
+            })
+        } else {
+            res.status(500).json({error: 'Not a valid ID'})
+        }
+
+
+    } catch(err) {
+        res.status(500).send(err)
+    }
+})
 
 
 function checkErr(message, status) { //helper function to check to see if any data is taken.
